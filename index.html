@@ -18,12 +18,28 @@
             margin-left: auto;
             margin-right: auto;
             white-space: pre-wrap; /* Preserve formatting */
+            height: 200px; /* Fixed height */
+            overflow-y: auto; /* Scroll if content overflows */
+        }
+        #copyButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #copyButton:hover {
+            background-color: #45a049; /* Darker green on hover */
         }
     </style>
 </head>
 <body>
     <h1>Telegram Web App</h1>
     <div id="initParams">Loading __telegram__initParams...</div>
+    <button id="copyButton">Copy Data</button>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -32,13 +48,11 @@
                 
                 // Function to display tgWebAppData
                 function displayInitParams() {
-                    // Get the __telegram__initParams from session storage
                     const initParams = sessionStorage.getItem('__telegram__initParams');
                     const initParamsDiv = document.getElementById('initParams');
                     
                     if (initParams) {
                         try {
-                            // Parse the JSON and extract tgWebAppData
                             const parsedParams = JSON.parse(initParams);
                             const tgWebAppData = parsedParams.tgWebAppData || 'No tgWebAppData found.';
                             
@@ -58,6 +72,18 @@
                 const initParamsDiv = document.getElementById('initParams');
                 initParamsDiv.textContent = 'Telegram Web App is not available.';
             }
+
+            // Function to copy content to clipboard
+            document.getElementById('copyButton').addEventListener('click', function() {
+                const initParamsDiv = document.getElementById('initParams');
+                const range = document.createRange();
+                range.selectNode(initParamsDiv);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                alert('Data copied to clipboard!');
+            });
         });
     </script>
 </body>
