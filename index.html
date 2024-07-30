@@ -2,15 +2,30 @@
 <html>
 <head>
     <title>Telegram Web App</title>
+    <style>
+        #tgData {
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
     <h1>Telegram Web App</h1>
     <button id="getDataBtn">Get tgWebAppData</button>
+    <div id="tgData"></div>
+
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
+        // Initialize the Telegram Web App SDK
+        Telegram.WebApp.init();
+
+        // Function to handle button click
         document.getElementById('getDataBtn').addEventListener('click', function() {
-            const initParams = Telegram.WebApp.initDataUnsafe;
-            Telegram.WebApp.sendData(JSON.stringify(initParams));
+            // Retrieve Telegram Web App init data
+            const initData = Telegram.WebApp.initDataUnsafe;
+            
+            // Display __telegram__initParams
+            document.getElementById('tgData').textContent = JSON.stringify(initData, null, 2);
         });
     </script>
 </body>
