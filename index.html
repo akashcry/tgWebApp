@@ -17,6 +17,7 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            white-space: pre-wrap; /* Preserve formatting */
         }
     </style>
 </head>
@@ -25,30 +26,39 @@
     <div id="initParams">Loading __telegram__initParams...</div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        function displayInitParams() {
-            // Get the __telegram__initParams from session storage
-            const initParams = sessionStorage.getItem('__telegram__initParams');
-            // Display the initParams on the page
-            const initParamsDiv = document.getElementById('initParams');
-            if (initParams) {
-                const tgWebDatas=initParams.tgWebAppData;
-                initParamsDiv.textContent = `__telegram__initParams: ${tgWebDatas}`;
-            } else {
-                initParamsDiv.textContent = 'No __telegram__initParams found in session storage.';
-            }
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.ready();
+                
+                // Function to display tgWebAppData
+                function displayInitParams() {
+                    // Get the __telegram__initParams from session storage
+                    const initParams = sessionStorage.getItem('__telegram__initParams');
+                    const initParamsDiv = document.getElementById('initParams');
+                    
+                    if (initParams) {
+                        try {
+                            // Parse the JSON and extract tgWebAppData
+                            const parsedParams = JSON.parse(initParams);
+                            const tgWebAppData = parsedParams.tgWebAppData || 'No tgWebAppData found.';
+                            
+                            // Display the tgWebAppData on the page
+                            initParamsDiv.textContent = `tgWebAppData: ${tgWebAppData}`;
+                        } catch (error) {
+                            initParamsDiv.textContent = 'Error parsing __telegram__initParams.';
+                        }
+                    } else {
+                        initParamsDiv.textContent = 'No __telegram__initParams found in session storage.';
+                    }
+                }
 
-        // Check if Telegram Web App is available
-        if (window.Telegram && Telegram.WebApp) {
-            // Wait for the Web App to be fully initialized
-            Telegram.WebApp.ready();
-            // Delay the display of the initParams to ensure the Web App is ready
-            setTimeout(displayInitParams, 1000); // Adjust the delay if necessary
-        } else {
-            // Telegram Web App not available
-            const initParamsDiv = document.getElementById('initParams');
-            initParamsDiv.textContent = 'Telegram Web App is not available.';
-        }
+                // Delay to ensure Telegram Web App SDK is initialized
+                setTimeout(displayInitParams, 1000); // Adjust the delay if necessary
+            } else {
+                const initParamsDiv = document.getElementById('initParams');
+                initParamsDiv.textContent = 'Telegram Web App is not available.';
+            }
+        });
     </script>
 </body>
 </html>
