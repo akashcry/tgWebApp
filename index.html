@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Telegram Web App</title>
+</head>
+<body>
+    <h1>Telegram Web App</h1>
+    <button id="getDataBtn">Get tgWebAppData</button>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        document.getElementById('getDataBtn').addEventListener('click', function() {
+            Telegram.WebApp.sendData(JSON.stringify(Telegram.WebApp.initDataUnsafe));
+        });
+    </script>
+</body>
+</html>
