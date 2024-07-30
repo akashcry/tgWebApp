@@ -2,36 +2,31 @@
 <html>
 <head>
     <title>Telegram Web App</title>
+    <style>
+        #tgData {
+            margin-top: 20px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
     <h1>Telegram Web App</h1>
     <button id="getDataBtn">Get tgWebAppData</button>
-    <div id="result"></div>
+    <div id="tgData"></div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        // Initialize Telegram Web App
+        // Initialize the Telegram Web App SDK
         Telegram.WebApp.init();
 
-        // Add click event listener to the button
+        // Function to handle button click
         document.getElementById('getDataBtn').addEventListener('click', function() {
-            // Get the Telegram Web App data
-            const initParams = Telegram.WebApp.initDataUnsafe;
+            // Retrieve Telegram Web App init data
+            const initData = Telegram.WebApp;
             
-            // Store the data in session storage
-            sessionStorage.setItem('__telegram__initParams', JSON.stringify(initParams));
-
-            // Display the data on the page
-            document.getElementById('result').textContent = 'tgWebAppData: ' + JSON.stringify(initParams);
+            // Display __telegram__initParams
+            document.getElementById('tgData').textContent = JSON.stringify(initData, null, 2);
         });
-
-        // Optionally display the stored data on page load
-        window.onload = function() {
-            const storedData = sessionStorage.getItem('__telegram__initParams');
-            if (storedData) {
-                document.getElementById('result').textContent = 'Stored tgWebAppData: ' + storedData;
-            }
-        };
     </script>
 </body>
 </html>
