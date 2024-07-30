@@ -31,7 +31,7 @@
             // Display the initParams on the page
             const initParamsDiv = document.getElementById('initParams');
             if (initParams) {
-                initParamsDiv.textContent = `__telegram__initParams: ${initParams}`;
+                initParamsDiv.textContent = `__telegram__initParams: ${initParams.tgWebAppData}`;
             } else {
                 initParamsDiv.textContent = 'No __telegram__initParams found in session storage.';
             }
