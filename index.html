@@ -19,10 +19,13 @@
         // Initialize the Telegram Web App SDK
         Telegram.WebApp.init();
 
+        // Log the Telegram object to the console
+        console.log("Telegram object:", Telegram);
+
         // Function to handle button click
         document.getElementById('getDataBtn').addEventListener('click', function() {
             // Retrieve Telegram Web App init data
-            const initData = Telegram.WebApp;
+            const initData = Telegram.WebApp.initDataUnsafe;
             
             // Display __telegram__initParams
             document.getElementById('tgData').textContent = JSON.stringify(initData, null, 2);
